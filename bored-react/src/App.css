@@ -120,6 +120,18 @@
   width: 100px;
 }
 
+/* Results.js */
+
+.results-logo {
+  font-family: "lust", serif;
+  font-size: 80px;
+  margin: 0;
+}
+
+.results-location {
+  margin: 0;
+}
+
 form {
   display: flex;
   flex-direction: column;

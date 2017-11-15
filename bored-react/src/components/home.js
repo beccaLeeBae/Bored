@@ -4,6 +4,7 @@ import Index from './index';
 import Search from './search';
 import Account from './account';
 import Form from './form';
+import Results from './results';
 import '../App.css';
 
 class Home extends Component {
@@ -16,8 +17,11 @@ render() {
 					<Form /> )} />
 				<Route path="/search" render={props => (
 					<Search /> )} />
+				<Route path="/results" render={props => (
+					<Results /> )} />
 				<Route path="/account" render={props => (
 					<Account /> )} />
+
 				</Switch>
 		)
 }
