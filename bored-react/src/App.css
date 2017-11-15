@@ -1,3 +1,5 @@
+/* Index.js */
+
 .index-content {
   display: flex;
   flex-direction: column;
@@ -8,11 +10,13 @@
 }
 
 .bored-display-index {
-  font-family: "lust",serif;
+  font-family: "lust", serif;
   font-size: 144px;
   color: white;
   margin: 0;
 }
+
+/* Form.js */
 
 .form-content {
   display: flex;
@@ -20,11 +24,15 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(110deg, #d9dedf 50%, transparent 20%);
+  background: linear-gradient(110deg, white 50%, transparent 20%);
 }
 
 .form-left {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh;
 }
 
 .form-right {
@@ -33,6 +41,83 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.bored-logo {
+  font-family: "lust", serif;
+  color: #383e40;
+  font-size: 80px;
+  margin: 0;
+  margin-bottom: 40%;
+}
+
+.bored-intro {
+  font-size: 30px;
+  color: #383e40;
+  margin: 0;
+}
+
+/* Search.js */
+
+.search-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-text {
+  font-size: 60px;
+}
+
+.search-body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-body-buttons {
+  margin: 0px 15px;
+  text-align: center;
+}
+
+.user-menu {
+  background-color: #d9dedf;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.user-initial {
+  font-family: "lust", serif;
+  font-size: 36px;
+  color: #383e40;
+}
+
+.couch-button, .car-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 177px;
+  height: 177px;
+  border-radius: 4px;
+  background-image: radial-gradient(circle at 52% 50%, #d93a48, #931621);
+}
+
+.couch-button img, .car-button img {
+  width: 100px;
 }
 
 form {
@@ -46,4 +131,6 @@ input {
   margin: 10px;
   padding: 10px 15px;
   border: none;
+  font-family: "omnes-pro",sans-serif;
+  font-size: 13px;
 }
