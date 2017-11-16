@@ -17,15 +17,17 @@ class Signup extends Component {
 
 	signUp(e){
 		e.preventDefault();
-		axios.post(`{this.props.url}/users`, this.state.inputs).then(res => {
+		axios.post(`${this.props.url}/users`, this.state.inputs).then(res => {
 			this.props.setUser(res.data);
 		})
 	}
 
 	changeInput(e, input) {
 		const val = e.target.value;
+		this.setState(prev => {
 		prev.inputs[input] = val;
 		return prev;
+		})
 	}
 
 	render() {

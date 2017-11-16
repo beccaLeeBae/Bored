@@ -14,7 +14,7 @@ class Form extends Component {
 toggleMode(event){
 	event.preventDefault();
 	this.setState(prev => {
-		prev.mode = prev.mode === false ? true : false;
+		prev.newUser = prev.newUser === false ? true : false;
 		return prev
 	})
 }

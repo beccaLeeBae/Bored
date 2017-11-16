@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "../App.css";
 
 class Login extends Component {
@@ -14,15 +15,17 @@ class Login extends Component {
 
 	login(e){
 		e.preventDefault();
-		axios.post(`{this.props.url}/login`, this.state.inputs).then(res => {
+		axios.post(`${this.props.url}/login`, this.state.inputs).then(res => {
 			this.props.setUser(res.data);
 		})
 	}
 
 	changeInput(e, input) {
 		const val = e.target.value;
+		this.setState(prev => {
 		prev.inputs[input] = val;
 		return prev;
+		})
 	}
 
 	render() {

@@ -78,6 +78,8 @@
   flex-direction: column;
   justify-content: flex-start;
   height: 100vh;
+  margin-top: 30px;
+  margin-left: 30px;
 }
 
 .form-right {
@@ -119,6 +121,7 @@
 
 .search-text {
   font-size: 60px;
+  margin-left: 50px;
 }
 
 .search-body {
@@ -217,7 +220,7 @@ form {
   justify-content: center;
 }
 
-input {
+input, button {
   margin: 10px;
   padding: 10px 15px;
   border: none;

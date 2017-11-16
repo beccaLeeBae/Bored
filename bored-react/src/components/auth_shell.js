@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Route, Redirect, Switch, Router } from "react-router-dom";
-// import Index from "./components/index";
-import Form from "./components/form";
-import Home from "./components/home";
+import { Route, Switch } from "react-router-dom";
+import Form from "./form";
+import Search from "./search";
+import Results from "./results";
+import Account from "./account";
 import axios from "axios";
-import Cookies from "../helpers/Cookies";
-import "./App.css";
+import Cookies from "../helpers/cookies";
+import "../App.css";
 
 class AuthShell extends Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ class AuthShell extends Component {
 			mode: "loading",
 			url: "http://localhost:3000"
 		};
+		this.setUser = this.setUser.bind(this);
 	}
 
 	componentDidMount() {
@@ -29,11 +31,11 @@ class AuthShell extends Component {
 					params: { auth_token: token }
 				})
 				.then(res => {
-					this.setState({ user: res.data, mode: "content" });
+					this.setState({ user: res.data });
 				})
 				.catch(err => {
 					Cookies.set("token", "");
-					this.setState({ user: false, mode: "auth" });
+					this.setState({ user: false });
 				});
 		} else {
 			this.setState({ mode: "auth" });
@@ -42,12 +44,13 @@ class AuthShell extends Component {
 
 	setUser(user) {
 		Cookies.set("token", user.token);
-		this.setState({ user: user, mode: "content" });
+		this.setState({ user: user });
+		console.log("Logged in");
 	}
 
 	logoutUser() {
 		Cookies.set("token", "");
-		this.setState({ user: false, mode: "auth" });
+		this.setState({ user: false });
 	}
 
 	renderView() {
@@ -57,7 +60,7 @@ class AuthShell extends Component {
 					exact
 					path="/"
 					render={props => (
-						<Form user={this.state.user} logoutUser={this.logoutUser} />
+						<Form user={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} url={this.state.url}/>
 					)}
 				/>
 				<Route
@@ -87,4 +90,4 @@ class AuthShell extends Component {
 	}
 }
 
-export default App;
+export default AuthShell;
