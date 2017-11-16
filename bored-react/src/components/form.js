@@ -26,12 +26,11 @@ render(){
 		<p className="bored-logo">Bored</p>
 		<p className="bored-intro">Entertainment recommendations when your brain is feeling dull</p>
 		</div>
-			{this.state.newUser === false && (
-				<Login />
-			)}
-			{this.state.newUser === true && (
-				<Signup />
-			)}
+			{this.state.newUser === false ? (
+				<Login {...this.props} toggleMode={this.toggleMode.bind(this)}/>
+				) : (
+				<Signup {...this.props} toggleMode={this.toggleMode.bind(this)}/>
+				)}
 		</div>
 		)
 }

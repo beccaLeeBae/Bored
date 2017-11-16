@@ -2,15 +2,38 @@ import React, { Component } from "react";
 import "../App.css";
 
 class Login extends Component {
+	constructor(){
+		super();
+		this.state = {
+			inputs: {
+				email: "",
+				password: ""
+			}
+		}
+	}
+
+	login(e){
+		e.preventDefault();
+		axios.post(`{this.props.url}/login`, this.state.inputs).then(res => {
+			this.props.setUser(res.data);
+		})
+	}
+
+	changeInput(e, input) {
+		const val = e.target.value;
+		prev.inputs[input] = val;
+		return prev;
+	}
+
 	render() {
 		return (
 			<div className="form-right">
-				<form>
-					<input type="email" placeholder="Email" />
-					<input type="password" placeholder="Password" />
+				<form onSubmit={this.login.bind(this)}>
+					<input type="email" placeholder="Email" value={this.state.inputs.email} onChange={e => this.changeInput(e, "email")}/>
+					<input type="password" placeholder="Password" value={this.state.inputs.password} onChange={e => this.changeInput(e, "password")}/>
 					<input type="submit" value="Log In" />
 				</form>
-				<p>Register</p>
+				<button onClick={this.props.toggleMode}>Register</button>
 			</div>
 		);
 	}
