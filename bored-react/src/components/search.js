@@ -8,7 +8,8 @@ class Search extends Component {
 	constructor() {
 		super();
 		this.state = {
-			searchType: "none"
+			searchType: "none",
+			zip: ''
 		};
 	}
 
@@ -22,6 +23,12 @@ class Search extends Component {
 		console.log("Showing search results for option one");
 	}
 
+	getZip(e, input) {
+		const zip = e.target.value;
+		this.setState({ zip: zip });
+		console.log("Zipcode is ", zip);
+	}
+
 	render() {
 		return (
 			<div className="search-content">
@@ -29,7 +36,7 @@ class Search extends Component {
 			{this.state.searchType === "none" && (
 				<div className="search-header">
 				<p className="search-text">How bored are you?</p>
-				<Nav />
+				<Nav logoutUser={this.props.logoutUser} />
 				</div>
 				)}
 			{this.state.searchType === "searchOut" && (
@@ -38,7 +45,7 @@ class Search extends Component {
 				<p className="results-logo">Bored</p>
 				<p className="results-location">& leaving the house</p>
 				</div>
-				<Nav />
+				<Nav logoutUser={this.props.logoutUser} />
 				</div>
 				)}
 
@@ -62,7 +69,7 @@ class Search extends Component {
 				<div className="search-out-body">
 				<p className="search-res-text">Where are you?</p>
 				<form>
-				<input type="text" placeholder="i.e. 11237"/>
+				<input type="text" placeholder="i.e. 11237" value={this.state.zip} onChange={e => this.getZip(e, "zip")}/>
 				<input type="submit" value="Search"/>
 				</form>
 				</div>

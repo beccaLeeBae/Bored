@@ -13,10 +13,10 @@ class AuthShell extends Component {
 		super(props);
 		this.state = {
 			user: false,
-			mode: "loading",
 			url: "http://localhost:3000"
 		};
 		this.setUser = this.setUser.bind(this);
+		this.logoutUser = this.logoutUser.bind(this);
 	}
 
 	componentDidMount() {
@@ -38,7 +38,7 @@ class AuthShell extends Component {
 					this.setState({ user: false });
 				});
 		} else {
-			this.setState({ mode: "auth" });
+			this.setState({ user: false });
 		}
 	}
 
@@ -53,6 +53,8 @@ class AuthShell extends Component {
 	logoutUser() {
 		Cookies.set("token", "");
 		this.setState({ user: false });
+		this.props.history.push(`/`);
+		console.log("Logging out");
 	}
 
 	renderView() {

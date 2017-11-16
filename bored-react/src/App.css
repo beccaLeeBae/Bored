@@ -28,6 +28,11 @@
   color: #383e40;
 }
 
+.open-menu {
+  position: fixed;
+  margin-top: 75px;
+}
+
 .menu-button {
   width: 45px;
   height: 45px;
@@ -37,6 +42,11 @@
   align-items: center;
   background-color: #d9dedf;
   margin-top: 25px;
+}
+
+.menu-button:hover {
+  cursor: pointer;
+  opacity: .5;
 }
 
 .menu-button img {
@@ -248,7 +258,7 @@ input[type="submit"], button {
   font-size: 18px;
 }
 
-input, button {
+input {
   margin: 10px;
   padding: 10px 15px;
   border: none;

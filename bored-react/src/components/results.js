@@ -18,7 +18,7 @@ render(){
 					{this.state.resultType === "out" && (<p className="results-location">& leaving the house</p>)}
 					{this.state.resultType === "in" && (<p className="results-location">& staying on the couch</p>)}
 					</div>
-					<Nav />
+					<Nav logoutUser={this.props.logoutUser} />
 				</div>
 				<div className="results-gallery">
 				</div>
