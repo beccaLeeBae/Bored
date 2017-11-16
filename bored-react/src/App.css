@@ -1,3 +1,48 @@
+/* Nav.js */
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 35px;
+  margin-top: 35px;
+}
+
+.user-menu {
+  background-color: #d9dedf;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-menu:hover {
+  cursor: pointer;
+  opacity: .5;
+}
+
+.user-initial {
+  font-family: "lust", serif;
+  font-size: 36px;
+  color: #383e40;
+}
+
+.menu-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9dedf;
+  margin-top: 25px;
+}
+
+.menu-button img {
+  width: 20px;
+}
+
 /* Index.js */
 
 .index-content {
@@ -88,24 +133,6 @@
   text-align: center;
 }
 
-.user-menu {
-  background-color: #d9dedf;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 20px;
-  margin-top: 20px;
-}
-
-.user-initial {
-  font-family: "lust", serif;
-  font-size: 36px;
-  color: #383e40;
-}
-
 .couch-button, .car-button {
   display: flex;
   justify-content: center;
@@ -122,6 +149,11 @@
 
 /* Results.js */
 
+.results-text-content {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
 .results-logo {
   font-family: "lust", serif;
   font-size: 80px;
@@ -130,6 +162,52 @@
 
 .results-location {
   margin: 0;
+  margin-top: -20px;
+}
+
+/* Account.js */
+.account-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.account-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.account-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-text {
+  font-size: 64px;
+  margin: 0;
+}
+
+.account-sub-text {
+  color: #77878b;
+}
+
+.couch-account-button, .car-account-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 177px;
+  height: 177px;
+  border-radius: 4px;
+  background-color: #d9dedf;
+}
+
+.couch-account-button img, .car-account-button img {
+  width: 100px;
 }
 
 form {
@@ -143,6 +221,6 @@ input {
   margin: 10px;
   padding: 10px 15px;
   border: none;
-  font-family: "omnes-pro",sans-serif;
+  font-family: "Helvetica Neue",sans-serif;
   font-size: 13px;
 }

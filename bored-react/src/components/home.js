@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Link, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Index from './index';
 import Search from './search';
 import Account from './account';

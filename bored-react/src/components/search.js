@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Nav from './nav';
 import Couch from "../images/couch.png";
 import Car from "../images/car.png";
 import "../App.css";
@@ -9,9 +10,7 @@ class Search extends Component {
 			<div className="search-content">
 				<div className="search-header">
 					<p className="search-text">How bored are you?</p>
-					<div className="user-menu">
-						<p className="user-initial">B</p>
-					</div>
+					<Nav/>
 				</div>
 				<div className="search-body">
 					<div className="search-body-buttons">
