@@ -44,7 +44,9 @@ class AuthShell extends Component {
 
 	setUser(user) {
 		Cookies.set("token", user.token);
-		this.setState({ user: user });
+		this.setState({ user: user }, () => {
+			this.props.history.push(`/search`);
+		});
 		console.log("Logged in");
 	}
 

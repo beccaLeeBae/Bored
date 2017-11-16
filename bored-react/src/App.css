@@ -131,9 +131,26 @@
   align-items: center;
 }
 
+.search-out-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-res-text {
+  font-size: 64px;
+  margin-top: 0;
+}
+
 .search-body-buttons {
-  margin: 0px 15px;
+  margin: 0px 100px;
   text-align: center;
+}
+
+.search-body-buttons:hover {
+  cursor: pointer;
 }
 
 .couch-button, .car-button {
@@ -218,6 +235,17 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+input[type="submit"], button {
+  background-color: #931621;
+  margin: 10px;
+  padding: 10px 15px;
+  border: none;
+  font-family: "Helvetica Neue",sans-serif;
+  font-weight: 100;
+  color: #d9dedf;
+  font-size: 18px;
 }
 
 input, button {
