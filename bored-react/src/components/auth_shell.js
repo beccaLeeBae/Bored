@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Form from "./form";
 import Search from "./search";
 import Results from "./results";
@@ -17,6 +17,7 @@ class AuthShell extends Component {
 		};
 		this.setUser = this.setUser.bind(this);
 		this.logoutUser = this.logoutUser.bind(this);
+		this.requireUser = this.requireUser.bind(this);
 	}
 
 	componentDidMount() {
@@ -57,20 +58,24 @@ class AuthShell extends Component {
 		console.log("Logging out");
 	}
 
+	requireUser(render){
+		return (this.state.user ? render : <Redirect to="/" />)
+	}
+
 	renderView() {
 		return (
 			<Switch>
 				<Route
 					exact
 					path="/"
-					render={props => (
+					render= {props => (
 						<Form user={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} url={this.state.url}/>
 					)}
 				/>
 				<Route
 					path="/search"
-					render={props => (
-						<Search user={this.state.user} logoutUser={this.logoutUser} />
+					render={props => this.requireUser(
+						<Search user={this.state.user} logoutUser={this.logoutUser} url={this.state.url}/>
 					)}
 				/>
 				<Route

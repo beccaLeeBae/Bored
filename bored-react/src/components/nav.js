@@ -20,8 +20,8 @@ class Nav extends Component {
 			return prev;
 		})
 	}
-	render() {
 
+	render() {
 		return (
 				<div className="nav-content">
 				<div className="user-menu" onClick={this.toggleMenu.bind(this)}>
@@ -31,7 +31,7 @@ class Nav extends Component {
 				<div className="open-menu">
 				
 				<Link to="/search">
-				<div className="menu-button">
+				<div className="menu-button" onClick={this.props.newSearch}>
 				<img src={SearchButton} alt="Search"/>
 				</div>
 				</Link>
