@@ -7,12 +7,15 @@ import Account from "./account";
 import axios from "axios";
 import Cookies from "../helpers/cookies";
 import "../App.css";
+require("date-format-lite");
 
 class AuthShell extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			user: false,
+			date: "",
+			zipCode: '',
 			url: "http://localhost:3000",
 			movieData: [],
 			tvData: []
@@ -20,12 +23,21 @@ class AuthShell extends Component {
 		this.setUser = this.setUser.bind(this);
 		this.logoutUser = this.logoutUser.bind(this);
 		this.requireUser = this.requireUser.bind(this);
+		this.passZip = this.passZip.bind(this);
 		this.getMovies = this.getMovies.bind(this);
 		this.getShows = this.getShows.bind(this);
 	}
 
 	componentDidMount() {
 		this.initUser();
+		this.getDate();
+	}
+
+	getDate() {
+		const d = new Date();
+		const newDate = d.format("YYYY-MM-DD");
+		this.setState({ date: newDate });
+		console.log("Today's date is", newDate);
 	}
 
 	initUser() {
@@ -66,19 +78,33 @@ class AuthShell extends Component {
 		return this.state.user ? render : <Redirect to="/" />;
 	}
 
-	getMovies(event) {
-		event.preventDefault();
-		axios.get("http://localhost:3000/movies").then(res => {
-			this.setState({ movieData: res.data.results });
-			this.props.history.push(`/results`);
-		});
+	passZip(zip){
+		console.log("Zipcode in parent comp", zip);
+		this.setState({ zipCode: zip });
+		this.getMovies();
+	}
+
+	getMovies() {
+		// get all movies with time and zip code
+		// axios
+		// 	.get(`${this.state.url}/movies/${this.state.zipCode}/${this.state.date}`)
+		// 	.then(res => {
+		// 		console.log("Successful fetching of movieData", res.data);
+		// 		this.setState({ movieData: res.data });
+		// 		this.props.history.push(`/results`);
+		// 	})
+		// 	.catch(err => {
+		// 		console.log("Error fetching movie data");
+		// 	});
+
+		console.log("Inside getMovies, the zip here is ", this.state.zipCode);
 	}
 
 	getShows(event) {
 		event.preventDefault();
-		axios.get("http://localhost:3000/tv").then(res => {
+		axios.get(`${this.state.url}/tv`).then(res => {
 			this.setState({ tvData: res.data.results });
-			console.log(res.data);
+			console.log("Sucessful fetching of tvData", res.data);
 			this.props.history.push(`/results`);
 		});
 	}
@@ -106,6 +132,7 @@ class AuthShell extends Component {
 								user={this.state.user}
 								logoutUser={this.logoutUser}
 								url={this.state.url}
+								passZip={this.passZip}
 								getMovies={this.getMovies}
 								getShows={this.getShows}
 							/>
@@ -114,7 +141,12 @@ class AuthShell extends Component {
 				<Route
 					path="/results"
 					render={props => (
-						<Results user={this.state.user} logoutUser={this.logoutUser} tvData={this.state.tvData} movieData={this.state.movieData} />
+						<Results
+							user={this.state.user}
+							logoutUser={this.logoutUser}
+							tvData={this.state.tvData}
+							movieData={this.state.movieData}
+						/>
 					)}
 				/>
 				<Route
