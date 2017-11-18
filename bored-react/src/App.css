@@ -214,7 +214,8 @@
 
 .results-each {
   width: 250px;
-  height: 350px;
+  height: 450px;
+  margin-bottom: 60px;
   background-color: gray;
   text-align: center;
   display: flex;

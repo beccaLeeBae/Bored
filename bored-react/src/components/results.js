@@ -7,7 +7,7 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			resultType: "out",
+			resultType: "in",
 			dummyTv:
 				"http://trendland.com/wp-content/uploads/2009/11/minimalist-poster-popular-tv-shows.jpg",
 			dummyMovie:
@@ -19,12 +19,24 @@ class Results extends Component {
 	getMovies() {
 		return this.props.movieData.map(movie => {
 			return (
-				<div className="results-each" key={movie.rootId} onClick={this.saveMovie}>
+				<div className="results-each" key={movie.id} onClick={this.saveMovie}>
 					<p>{movie.title}</p>
-					<img src={movie.preferredImage.uri} alt="Movie Poster" />
-					<p>{movie.genres[0]}</p>
-					<p>{movie.showtimes[0].theatre.name}</p>
-					<p>{movie.showtimes[0].dateTime}</p>
+					<img src={this.state.dummyMovie} alt="Movie Poster"/>
+					<p>{movie.overview}</p>
+					<p>Rating: {movie.vote_average}/10</p>
+				</div>
+			);
+		});
+	}
+
+	getShows() {
+			return this.props.tvData.map(show => {
+			return (
+				<div className="results-each" key={show.id} onClick={this.saveTv}>
+					<p>{show.name}</p>
+					<img src={this.state.dummyTv} alt="Movie Poster"/>
+					<p>{show.overview}</p>
+					<p>Rating: {show.vote_average}/10</p>
 				</div>
 			);
 		});
@@ -60,31 +72,7 @@ class Results extends Component {
 				)}
 
 				{this.state.resultType === "in" && (
-					<div className="results-gallery">
-						<div className="results-each" onClick={this.saveTv}>
-							<p>Program: Title</p>
-							<img src={this.state.dummyTv} alt="TV Poster" />
-							<p>Program: Genre(s)</p>
-							<p>Station - callSign (Name)</p>
-							<p>startTime - duration (hours)</p>
-						</div>
-
-						<div className="results-each" onClick={this.saveTv}>
-							<p>Program: Title</p>
-							<img src={this.state.dummyTv} alt="TV Poster" />
-							<p>Program: Genre(s)</p>
-							<p>Station - callSign (Name)</p>
-							<p>startTime - duration (hours)</p>
-						</div>
-
-						<div className="results-each" onClick={this.saveTv}>
-							<p>Program: Title</p>
-							<img src={this.state.dummyTv} alt="TV Poster" />
-							<p>Program: Genre(s)</p>
-							<p>Station - callSign (Name)</p>
-							<p>startTime - duration (hours)</p>
-						</div>
-					</div>
+					<div className="results-gallery">{this.getShows()}</div>
 				)}
 			</div>
 		);

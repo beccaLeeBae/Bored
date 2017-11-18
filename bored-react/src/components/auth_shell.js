@@ -13,11 +13,15 @@ class AuthShell extends Component {
 		super(props);
 		this.state = {
 			user: false,
-			url: "http://localhost:3000"
+			url: "http://localhost:3000",
+			movieData: [],
+			tvData: []
 		};
 		this.setUser = this.setUser.bind(this);
 		this.logoutUser = this.logoutUser.bind(this);
 		this.requireUser = this.requireUser.bind(this);
+		this.getMovies = this.getMovies.bind(this);
+		this.getShows = this.getShows.bind(this);
 	}
 
 	componentDidMount() {
@@ -58,8 +62,25 @@ class AuthShell extends Component {
 		console.log("Logging out");
 	}
 
-	requireUser(render){
-		return (this.state.user ? render : <Redirect to="/" />)
+	requireUser(render) {
+		return this.state.user ? render : <Redirect to="/" />;
+	}
+
+	getMovies(event) {
+		event.preventDefault();
+		axios.get("http://localhost:3000/movies").then(res => {
+			this.setState({ movieData: res.data.results });
+			this.props.history.push(`/results`);
+		});
+	}
+
+	getShows(event) {
+		event.preventDefault();
+		axios.get("http://localhost:3000/tv").then(res => {
+			this.setState({ tvData: res.data.results });
+			console.log(res.data);
+			this.props.history.push(`/results`);
+		});
 	}
 
 	renderView() {
@@ -68,20 +89,32 @@ class AuthShell extends Component {
 				<Route
 					exact
 					path="/"
-					render= {props => (
-						<Form user={this.state.user} setUser={this.setUser} logoutUser={this.logoutUser} url={this.state.url}/>
+					render={props => (
+						<Form
+							user={this.state.user}
+							setUser={this.setUser}
+							logoutUser={this.logoutUser}
+							url={this.state.url}
+						/>
 					)}
 				/>
 				<Route
 					path="/search"
-					render={props => this.requireUser(
-						<Search user={this.state.user} logoutUser={this.logoutUser} url={this.state.url}/>
-					)}
+					render={props =>
+						this.requireUser(
+							<Search
+								user={this.state.user}
+								logoutUser={this.logoutUser}
+								url={this.state.url}
+								getMovies={this.getMovies}
+								getShows={this.getShows}
+							/>
+						)}
 				/>
 				<Route
 					path="/results"
 					render={props => (
-						<Results user={this.state.user} logoutUser={this.logoutUser} />
+						<Results user={this.state.user} logoutUser={this.logoutUser} tvData={this.state.tvData} movieData={this.state.movieData} />
 					)}
 				/>
 				<Route
