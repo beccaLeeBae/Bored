@@ -29,7 +29,7 @@
 }
 
 .open-menu {
-  position: fixed;
+  position: absolute;
   margin-top: 75px;
 }
 
@@ -208,14 +208,15 @@
   flex: 1;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 50px;
   justify-content: space-around;
   align-items: center;
 }
 
 .results-each {
-  width: 250px;
-  height: 450px;
-  margin-bottom: 60px;
+  width: 220px;
+  height: 370px;
+  margin-bottom: 40px;
   background-color: gray;
   text-align: center;
   display: flex;
@@ -224,9 +225,9 @@
   justify-content: center;
 }
 
-.results-each:hover {
-  cursor: pointer;
-  opacity: .5;
+.results-title {
+  font-size: 18px;
+  font-weight: 300;
 }
 
 .results-each img {
@@ -235,6 +236,54 @@
 
 .results-each p {
   margin: 5px 0px;
+}
+
+.results-each button {
+  margin: 0;
+  margin-top: 5px;
+}
+
+/* Results Modal */
+
+.modal {
+  /*display: none;*/
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.show-more-modal {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 4px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.close-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #383e40;
+}
+
+.close-modal:hover {
+  cursor: pointer;
 }
 
 /* Account.js */
@@ -282,6 +331,14 @@
   width: 100px;
 }
 
+/* 404 Page */
+
+.no-user-text {
+  font-family: "lust", serif;
+  font-size: 240px;
+  margin: 0;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -298,6 +355,10 @@ input[type="submit"], button {
   font-weight: 100;
   color: #d9dedf;
   font-size: 18px;
+}
+
+input[type="submit"]:hover, button:hover {
+  cursor: pointer;
 }
 
 input {

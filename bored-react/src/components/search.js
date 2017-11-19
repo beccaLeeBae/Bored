@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Nav from "./nav";
 import Couch from "../images/couch.png";
 import Car from "../images/car.png";
-import Results from "./results";
 import "../App.css";
 
 class Search extends Component {
@@ -26,11 +25,6 @@ class Search extends Component {
 	changeZip(e, input) {
 		const zip = e.target.value;
 		this.setState({ zip: zip });
-		this.setZip();
-	}
-
-	setZip() {
-		this.props.passZip(this.state.zip);
 	}
 
 	render() {
@@ -39,7 +33,7 @@ class Search extends Component {
 				{this.state.searchType === "new" && (
 					<div className="search-header">
 						<p className="search-text">How bored are you?</p>
-						<Nav logoutUser={this.props.logoutUser} />
+						<Nav logoutUser={this.props.logoutUser} user={this.props.user} />
 					</div>
 				)}
 				{this.state.searchType === "searchOut" && (
@@ -49,6 +43,7 @@ class Search extends Component {
 							<p className="results-location">& leaving the house</p>
 						</div>
 						<Nav
+							user={this.props.user}
 							logoutUser={this.props.logoutUser}
 							newSearch={this.newSearch.bind(this)}
 						/>
@@ -74,7 +69,7 @@ class Search extends Component {
 				{this.state.searchType === "searchOut" && (
 					<div className="search-out-body">
 						<p className="search-res-text">Where are you?</p>
-						<form onSubmit={this.setZip}>
+						<form onSubmit={e => this.props.passZip(e, this.state.zip)}>
 							<input
 								type="text"
 								placeholder="i.e. 11237"

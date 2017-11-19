@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Form from "./form";
 import Search from "./search";
-import Results from "./results";
+import StayingIn from "./stayingIn";
+import GoingOut from "./goingOut";
 import Account from "./account";
+import NoUser from './noUser';
 import axios from "axios";
 import Cookies from "../helpers/cookies";
 import "../App.css";
@@ -15,7 +17,6 @@ class AuthShell extends Component {
 		this.state = {
 			user: false,
 			date: "",
-			zipCode: '',
 			url: "http://localhost:3000",
 			movieData: [],
 			tvData: []
@@ -75,29 +76,28 @@ class AuthShell extends Component {
 	}
 
 	requireUser(render) {
-		return this.state.user ? render : <Redirect to="/" />;
+		return this.state.user ? render : <Redirect to="/404" />;
 	}
 
-	passZip(zip){
+	passZip(e, zip) {
+		e.preventDefault();
 		console.log("Zipcode in parent comp", zip);
-		this.setState({ zipCode: zip });
-		this.getMovies();
+		this.getMovies(zip);
 	}
 
-	getMovies() {
+	getMovies(zip) {
+		console.log("The zipcode at getMovies is", zip);
 		// get all movies with time and zip code
-		// axios
-		// 	.get(`${this.state.url}/movies/${this.state.zipCode}/${this.state.date}`)
-		// 	.then(res => {
-		// 		console.log("Successful fetching of movieData", res.data);
-		// 		this.setState({ movieData: res.data });
-		// 		this.props.history.push(`/results`);
-		// 	})
-		// 	.catch(err => {
-		// 		console.log("Error fetching movie data");
-		// 	});
-
-		console.log("Inside getMovies, the zip here is ", this.state.zipCode);
+		axios
+			.get(`${this.state.url}/movies/${zip}/${this.state.date}`)
+			.then(res => {
+				console.log("Successful fetching of movieData", res.data);
+				this.setState({ movieData: res.data });
+				this.props.history.push(`/results/out`);
+			})
+			.catch(err => {
+				console.log("Error fetching movie data");
+			});
 	}
 
 	getShows(event) {
@@ -105,7 +105,7 @@ class AuthShell extends Component {
 		axios.get(`${this.state.url}/tv`).then(res => {
 			this.setState({ tvData: res.data.results });
 			console.log("Sucessful fetching of tvData", res.data);
-			this.props.history.push(`/results`);
+			this.props.history.push(`/results/in`);
 		});
 	}
 
@@ -139,22 +139,35 @@ class AuthShell extends Component {
 						)}
 				/>
 				<Route
-					path="/results"
-					render={props => (
-						<Results
-							user={this.state.user}
-							logoutUser={this.logoutUser}
-							tvData={this.state.tvData}
-							movieData={this.state.movieData}
-						/>
-					)}
+					path="/results/out"
+					render={props =>
+						this.requireUser(
+							<GoingOut
+								user={this.state.user}
+								logoutUser={this.logoutUser}
+								movieData={this.state.movieData}
+							/>
+						)}
+				/>
+				<Route
+					path="/results/in"
+					render={props =>
+						this.requireUser(
+							<StayingIn
+								user={this.state.user}
+								logoutUser={this.logoutUser}
+								tvData={this.state.tvData}
+							/>
+						)}
 				/>
 				<Route
 					path="/account"
-					render={props => (
-						<Account user={this.state.user} logoutUser={this.logoutUser} />
-					)}
+					render={props =>
+						this.requireUser(
+							<Account user={this.state.user} logoutUser={this.logoutUser} />
+						)}
 				/>
+				<Route path="/404" render={props => <NoUser />} />
 			</Switch>
 		);
 	}

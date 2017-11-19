@@ -47,7 +47,7 @@ render(){
 	return(
 			<div className="account-content">
 				<div className="account-header">
-				<Nav logoutUser={this.props.logoutUser} />
+				<Nav user={this.props.user} logoutUser={this.props.logoutUser} />
 				</div>
 				<div className="account-body">
 				<p className="account-text">Other times you were bored</p>
