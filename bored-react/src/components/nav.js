@@ -22,11 +22,12 @@ class Nav extends Component {
 	}
 
 	render() {
-		const initial = this.props.user.name.slice(0, 1);
+		const slicedName = this.props.user.name.slice(0, 1);
+		const userInitial = slicedName.toUpperCase();
 		return (
 				<div className="nav-content">
 				<div className="user-menu" onClick={this.toggleMenu.bind(this)}>
-					<p className="user-initial">{initial}</p>
+					<p className="user-initial">{userInitial}</p>
 				</div>
 				{this.state.open === true && (
 				<div className="open-menu">

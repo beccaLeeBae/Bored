@@ -7,6 +7,7 @@ class GoingOut extends Component {
 		super(props);
 		this.state = {
 			show: false,
+			description: '',
 			dummyMovie:
 				"https://i.pinimg.com/736x/40/13/54/40135456fa61e13eddc37bcfa6e9f905--minimalist-movie-posters-minimalist-art.jpg"
 		};
@@ -19,6 +20,7 @@ class GoingOut extends Component {
 			prev.show = prev.show === false ? true : false;
 			return prev;
 		});
+		this.setState({ description: description });
 	}
 
 	getMovies() {
@@ -60,9 +62,11 @@ class GoingOut extends Component {
 								>
 									&times;
 								</span>
-								<p>Show Overview</p>
+								<div className="modal-content">
+								<p>{this.state.description}</p>
 								<button>I'll watch this</button>
 								<button>Find food nearby</button>
+							</div>
 							</div>
 						</div>
 					</div>

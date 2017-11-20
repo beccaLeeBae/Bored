@@ -11,10 +11,6 @@ class StayingIn extends Component {
 		};
 	}
 
-	saveTv(show) {
-		console.log(show);
-	}
-
 	getShows() {
 		return this.props.tvData.map(show => {
 			return (
@@ -33,10 +29,9 @@ class StayingIn extends Component {
 
 	toggleModal(event, overview) {
 		event.preventDefault();
-		console.log(overview);
 		this.setState(prev => {prev.show = prev.show === false ? true : false;
 		return prev});
-		this.setState({overview: overview});
+		this.setState({ overview: overview });
 	}
 
 	render() {

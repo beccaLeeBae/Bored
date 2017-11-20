@@ -178,6 +178,14 @@
   width: 100px;
 }
 
+/* Confirm */
+
+.confirm-text {
+  font-size: 60px;
+  text-align: center;
+  width: 65%;
+}
+
 /* Results.js */
 
 .results-content {
@@ -315,6 +323,11 @@
 
 .account-sub-text {
   color: #77878b;
+}
+
+.account-body-buttons {
+  margin: 0px 100px;
+  text-align: center;
 }
 
 .couch-account-button, .car-account-button {

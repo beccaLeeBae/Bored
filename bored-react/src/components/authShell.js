@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Form from "./form";
 import Search from "./search";
+import Confirm from './confirm';
 import StayingIn from "./stayingIn";
 import GoingOut from "./goingOut";
 import Account from "./account";
@@ -16,6 +17,7 @@ class AuthShell extends Component {
 		super(props);
 		this.state = {
 			user: false,
+			zip: '',
 			date: "",
 			url: "http://localhost:3000",
 			movieData: [],
@@ -82,7 +84,26 @@ class AuthShell extends Component {
 	passZip(e, zip) {
 		e.preventDefault();
 		console.log("Zipcode in parent comp", zip);
-		this.getMovies(zip);
+		this.getWeather(zip);
+	}
+
+	getWeather(zip) {
+				console.log("The zipcode at getWeather is", zip);
+		// get all movies with time and zip code
+		axios
+			.get(`${this.state.url}/weather/${zip}`)
+			.then(res => {
+				if ((res.data.main.temp) > 32) {
+					this.getMovies(zip);
+				}
+				else {
+					this.setState({ weatherData: res.data, zip: zip});
+					this.props.history.push(`/confirm`);
+				}
+			})
+			.catch(err => {
+				console.log("Error fetching movie data");
+			});
 	}
 
 	getMovies(zip) {
@@ -123,6 +144,20 @@ class AuthShell extends Component {
 							url={this.state.url}
 						/>
 					)}
+				/>
+				<Route
+					path="/confirm"
+					render={props =>
+						this.requireUser(
+							<Confirm
+								user={this.state.user}
+								url={this.state.url}
+								logoutUser={this.logoutUser}
+								zip={this.state.zip}
+								weatherData={this.state.weatherData}
+								getMovies={this.getMovies}
+							/>
+						)}
 				/>
 				<Route
 					path="/search"
