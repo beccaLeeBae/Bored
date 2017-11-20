@@ -3,7 +3,7 @@ Bored is a web app that helps you find something to do when you have nothing to 
 
 ## MVP
 - Users can create an account
-- Users can search for TV shows movies currently playing in theaters near them
+- Users can search for TV shows or movies currently playing in theaters near them
 - Bored will recommend a user to stay at home if the current temperature at their location is below freezing
 - Users can choose to go to Seamless.com to order food to go with their TV show of choice or restaurants near their location
 - Users can see how many times they chose to stay in or go out
