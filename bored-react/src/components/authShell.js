@@ -19,9 +19,12 @@ class AuthShell extends Component {
 			user: false,
 			zip: '',
 			date: "",
+			meal: '',
 			url: "http://localhost:3000",
 			movieData: [],
-			tvData: []
+			tvData: [],
+			episodeData: [],
+			foodOptions: []
 		};
 		this.setUser = this.setUser.bind(this);
 		this.logoutUser = this.logoutUser.bind(this);
@@ -29,6 +32,7 @@ class AuthShell extends Component {
 		this.passZip = this.passZip.bind(this);
 		this.getMovies = this.getMovies.bind(this);
 		this.getShows = this.getShows.bind(this);
+		this.showNextEpisode = this.showNextEpisode.bind(this);
 	}
 
 	componentDidMount() {
@@ -40,7 +44,16 @@ class AuthShell extends Component {
 		const d = new Date();
 		const newDate = d.format("YYYY-MM-DD");
 		this.setState({ date: newDate });
-		console.log("Today's date is", newDate);
+		const mealTime = d.format("hh");
+		if (mealTime >= '06' && mealTime <= '11') {
+			this.setState({ meal: "breakfast" });
+		} else if (mealTime >= '12' && mealTime <= '4') {
+			this.setState({ meal: "lunch" });
+		} else if (mealTime >= '4:30' && mealTime <= '9') {
+			this.setState({ meal: "dinner" });
+		} else {
+			this.setState({ meal: "snack" });
+		}
 	}
 
 	initUser() {
@@ -83,13 +96,10 @@ class AuthShell extends Component {
 
 	passZip(e, zip) {
 		e.preventDefault();
-		console.log("Zipcode in parent comp", zip);
 		this.getWeather(zip);
 	}
 
 	getWeather(zip) {
-				console.log("The zipcode at getWeather is", zip);
-		// get all movies with time and zip code
 		axios
 			.get(`${this.state.url}/weather/${zip}`)
 			.then(res => {
@@ -107,13 +117,12 @@ class AuthShell extends Component {
 	}
 
 	getMovies(zip) {
-		console.log("The zipcode at getMovies is", zip);
-		// get all movies with time and zip code
 		axios
 			.get(`${this.state.url}/movies/${zip}/${this.state.date}`)
 			.then(res => {
 				console.log("Successful fetching of movieData", res.data);
 				this.setState({ movieData: res.data });
+				this.getFood(zip, this.state.meal);
 				this.props.history.push(`/results/out`);
 			})
 			.catch(err => {
@@ -121,13 +130,33 @@ class AuthShell extends Component {
 			});
 	}
 
-	getShows(event) {
-		event.preventDefault();
+	getFood(zip, meal) {
+		axios.get(`http://localhost:3000/food/${zip}/${this.state.meal}`)
+		.then(res => {
+			this.setState({ foodOptions: res.data.response.groups[0].items });
+			console.log(res.data.response.groups[0].items);
+		}).catch(err => {
+			console.log("Error fetching restaurants");
+		})
+	}
+
+	getShows(e) {
+		e.preventDefault();
 		axios.get(`${this.state.url}/tv`).then(res => {
 			this.setState({ tvData: res.data.results });
 			console.log("Sucessful fetching of tvData", res.data);
 			this.props.history.push(`/results/in`);
 		});
+	}
+
+	showNextEpisode(title) {
+		axios.get(`http://localhost:3000/next/${title}`)
+		.then(res => {
+			this.setState({ episodeData: res.data[0].show });
+			console.log("Episode data in authShell", this.state.episodeData);
+		}).catch(err => {
+			console.log("Error fetching next showing")
+		})
 	}
 
 	renderView() {
@@ -156,6 +185,7 @@ class AuthShell extends Component {
 								zip={this.state.zip}
 								weatherData={this.state.weatherData}
 								getMovies={this.getMovies}
+								getShows={this.getShows}
 							/>
 						)}
 				/>
@@ -179,6 +209,7 @@ class AuthShell extends Component {
 						this.requireUser(
 							<GoingOut
 								user={this.state.user}
+								foodOptions={this.state.foodOptions}
 								logoutUser={this.logoutUser}
 								movieData={this.state.movieData}
 							/>
@@ -191,7 +222,10 @@ class AuthShell extends Component {
 							<StayingIn
 								user={this.state.user}
 								logoutUser={this.logoutUser}
+								url={this.state.url}
+								episodeData={this.state.episodeData}
 								tvData={this.state.tvData}
+								showNextEpisode={this.showNextEpisode}
 							/>
 						)}
 				/>

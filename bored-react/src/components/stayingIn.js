@@ -7,7 +7,8 @@ class StayingIn extends Component {
 		super();
 		this.state = {
 			show: false,
-			overview: ''
+			title: "",
+			overview: ""
 		};
 	}
 
@@ -20,18 +21,27 @@ class StayingIn extends Component {
 						alt="Show Poster"
 					/>
 					<p className="results-title">{show.name}</p>
-					<p>Rating: {show.vote_average}/10</p>
-					<button onClick={e => this.toggleModal(e, show.overview)}>More</button>
+					<p>Rating: {show.vote_average}</p>
+					<button onClick={e => this.toggleModal(e, show)}>More</button>
 				</div>
 			);
 		});
 	}
 
-	toggleModal(event, overview) {
+	toggleModal(event, show) {
 		event.preventDefault();
-		this.setState(prev => {prev.show = prev.show === false ? true : false;
-		return prev});
-		this.setState({ overview: overview });
+		this.setState(prev => {
+			prev.show = prev.show === false ? true : false;
+			return prev;
+		});
+		this.setState(prev => {
+			prev.overview = prev.overview === "" ? show.overview : "";
+			return prev;
+		});
+		this.setState(prev => {
+			prev.title = prev.title === "" ? show.name : "";
+			return prev;
+		});
 	}
 
 	render() {
@@ -39,29 +49,39 @@ class StayingIn extends Component {
 			<div>
 				{this.state.show === false && (
 					<div className="results-content">
-					<div className="search-header">
-					<div className="results-text-content">
-						<p className="results-logo">Bored</p>
-						<p className="results-location">& staying on the couch</p>
-					</div>
-					<Nav user={this.props.user} logoutUser={this.props.logoutUser} />
-				</div>
-					<div className="results-gallery">{this.getShows()}</div>
+						<div className="search-header">
+							<div className="results-text-content">
+								<p className="results-logo">Bored</p>
+								<p className="results-location">& staying on the couch</p>
+							</div>
+							<Nav user={this.props.user} logoutUser={this.props.logoutUser} />
+						</div>
+						<div className="results-gallery">{this.getShows()}</div>
 					</div>
 				)}
 
 				{this.state.show === true && (
 					<div className="results-content">
-					<div className="modal">
-						<div className="show-more-modal">
-							<span className="close-modal" onClick={this.toggleModal.bind(this)}>&times;</span>
-							<div className="modal-content">
-							<p>{this.state.overview}</p>
-							<button>I'll watch this</button>
-							<a href="https://www.seamless.com/"><button>Seamless</button></a>
+						<div className="modal">
+							<div className="show-more-modal">
+								<span
+									className="close-modal"
+									onClick={this.toggleModal.bind(this)}
+								>
+									&times;
+								</span>
+								<div className="modal-content">
+									<p className="show-title">{this.state.title}</p>
+									<p>{this.state.overview}</p>
+										<button>
+											I'll watch this
+										</button>
+										<a href="https://www.seamless.com/">
+											<button>Seamless</button>
+										</a>
+								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 				)}
 			</div>

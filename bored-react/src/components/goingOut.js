@@ -9,6 +9,7 @@ class GoingOut extends Component {
 		this.state = {
 			show: false,
 			description: '',
+			title: '',
 			showtimes: [],
 			dummyMovie:
 				"https://i.pinimg.com/736x/40/13/54/40135456fa61e13eddc37bcfa6e9f905--minimalist-movie-posters-minimalist-art.jpg"
@@ -17,7 +18,6 @@ class GoingOut extends Component {
 
 	toggleModal(event, description, showtimes) {
 		event.preventDefault();
-		console.log(showtimes);
 		this.setState(prev => {
 			prev.show = prev.show === false ? true : false;
 			return prev;
@@ -43,13 +43,26 @@ class GoingOut extends Component {
 		return this.state.showtimes.map(showing => {
 			const s = ((showing.dateTime).date("H:mm A"));
 			return (
-				<div>
+				<div key={Math.random()} className="modal-showtimes-each">
 				<p className="theatre-name">{showing.theatre.name}</p>
 				<p className="showtime">{s}</p>
+				{showing.ticketURI && (<a href={showing.ticketURI}>Get Tickets</a>)}
 				</div>
 				)
 		})
 	}
+
+	// getFood() {
+	// 	return this.props.foodOptions.forEach(option => {
+	// 		return (
+	// 			<div key={option.id}>
+	// 			<p>{option.venue.name}</p>
+	// 			<p>{option.venue.location}</p>
+	// 			<p></p>
+	// 			</div>
+	// 			)
+	// 	})
+	// }
 
 	render() {
 		return (
@@ -77,8 +90,12 @@ class GoingOut extends Component {
 									&times;
 								</span>
 								<div className="modal-content">
-								<p>{this.state.description}</p>
+								
+								{this.state.description && (<p>{this.state.description}</p>)}
+								<div className="modal-showtimes">
+								<p>{this.state.title}</p>
 								{this.getShowtimes()}
+								</div>
 								<button>I'll watch this</button>
 								<button>Find food nearby</button>
 							</div>

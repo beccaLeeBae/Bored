@@ -1,16 +1,9 @@
 import React, { Component } from "react";
 import Nav from "./nav";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "../App.css";
 
 class Confirm extends Component {
-	constructor(props){
-		super(props);
-	}
-	componentDidMount() {
-		console.log(this.props.weatherData);
-	}
-
 	newSearch() {
 		// this.props.history.push(`/search`);
 	}
@@ -38,7 +31,7 @@ class Confirm extends Component {
 						want to leave the house today?
 					</p>
 					<button onClick={() => {this.props.getMovies(this.props.zip)}}>Yes, I'm sure</button>
-					<Link to="/search"><button>I'll stay in</button></Link>
+					<button onClick={(e) => {this.props.getShows(e)}}>I'll stay in</button>
 				</div>
 			</div>
 		);
