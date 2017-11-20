@@ -39,6 +39,7 @@ class GoingOut extends Component {
 			return (
 				<div className="results-each" key={movie.tmsId}>
 					<img src={this.state.dummyMovie} alt="Movie Poster" />
+					<img src={movie.preferredImage.uri} alt="Movie Poster" />
 					<p className="results-title">{movie.title}</p>
 					<button onClick= {e => this.toggleModal(e, movie.shortDescription, movie.showtimes, movie.title)}>More</button>
 				</div>

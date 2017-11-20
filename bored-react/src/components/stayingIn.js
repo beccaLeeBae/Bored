@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nav from "./nav";
+import axios from "axios";
 import "../App.css";
 
 class StayingIn extends Component {
@@ -22,10 +23,28 @@ class StayingIn extends Component {
 					/>
 					<p className="results-title">{show.name}</p>
 					<p>Rating: {show.vote_average}</p>
-					<button onClick={e => this.toggleModal(e, show)}>More</button>
+					<button onClick={e => this.onClick(e, show)}>More</button>
 				</div>
 			);
 		});
+	}
+
+
+	onClick(e, show) {
+		this.toggleModal(e, show);
+		this.props.showNextEpisode(show.name);
+	}
+
+	saveOnClick(e) {
+		e.preventDefault();
+		console.log(this.props.url);
+		const medium = "tv";
+		axios.post(`${this.props.url}/save`, {medium: medium, title: this.state.title, user_id: this.props.user.id})
+		.then( res => {
+			console.log("SAVED", this.state.title)
+			}).catch( err => {
+				console.log("Error saving tv show");
+			})
 	}
 
 	toggleModal(event, show) {
@@ -73,7 +92,7 @@ class StayingIn extends Component {
 								<div className="modal-content">
 									<p className="show-title">{this.state.title}</p>
 									<p>{this.state.overview}</p>
-										<button>
+										<button onClick={ e => this.saveOnClick(e)}>
 											I'll watch this
 										</button>
 										<a href="https://www.seamless.com/">

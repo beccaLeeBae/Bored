@@ -80,7 +80,7 @@ class AuthShell extends Component {
 		this.setState({ user: user }, () => {
 			this.props.history.push(`/search`);
 		});
-		console.log("Logged in");
+		console.log(`${this.state.user.name} is logged in.`);
 	}
 
 	logoutUser() {
@@ -131,7 +131,7 @@ class AuthShell extends Component {
 	}
 
 	getFood(zip, meal) {
-		axios.get(`http://localhost:3000/food/${zip}/${this.state.meal}`)
+		axios.get(`${this.state.url}/food/${zip}/${this.state.meal}`)
 		.then(res => {
 			this.setState({ foodOptions: res.data.response.groups[0].items });
 			console.log(res.data.response.groups[0].items);
@@ -150,7 +150,7 @@ class AuthShell extends Component {
 	}
 
 	showNextEpisode(title) {
-		axios.get(`http://localhost:3000/next/${title}`)
+		axios.get(`${this.state.url}/next/${title}`)
 		.then(res => {
 			this.setState({ episodeData: res.data[0].show });
 			console.log("Episode data in authShell", this.state.episodeData);
