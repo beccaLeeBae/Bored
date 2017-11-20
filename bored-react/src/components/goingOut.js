@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Nav from "./nav";
 import "../App.css";
+require("date-format-lite");
 
 class GoingOut extends Component {
 	constructor(props) {
@@ -8,19 +9,20 @@ class GoingOut extends Component {
 		this.state = {
 			show: false,
 			description: '',
+			showtimes: [],
 			dummyMovie:
 				"https://i.pinimg.com/736x/40/13/54/40135456fa61e13eddc37bcfa6e9f905--minimalist-movie-posters-minimalist-art.jpg"
 		};
 	}
 
-	toggleModal(event, description) {
+	toggleModal(event, description, showtimes) {
 		event.preventDefault();
-		console.log(description);
+		console.log(showtimes);
 		this.setState(prev => {
 			prev.show = prev.show === false ? true : false;
 			return prev;
 		});
-		this.setState({ description: description });
+		this.setState({ description: description, showtimes: showtimes });
 	}
 
 	getMovies() {
@@ -31,10 +33,22 @@ class GoingOut extends Component {
 					<p className="results-title">{movie.title}</p>
 					<p>{movie.genres}</p>
 					<p>{movie.showtimes[0].theatre.name}</p>
-					<button onClick= {e => this.toggleModal(e, movie.shortDescription)}>More</button>
+					<button onClick= {e => this.toggleModal(e, movie.shortDescription, movie.showtimes)}>More</button>
 				</div>
 			);
 		});
+	}
+
+	getShowtimes() {
+		return this.state.showtimes.map(showing => {
+			const s = ((showing.dateTime).date("H:mm A"));
+			return (
+				<div>
+				<p className="theatre-name">{showing.theatre.name}</p>
+				<p className="showtime">{s}</p>
+				</div>
+				)
+		})
 	}
 
 	render() {
@@ -64,6 +78,7 @@ class GoingOut extends Component {
 								</span>
 								<div className="modal-content">
 								<p>{this.state.description}</p>
+								{this.getShowtimes()}
 								<button>I'll watch this</button>
 								<button>Find food nearby</button>
 							</div>

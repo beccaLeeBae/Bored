@@ -283,11 +283,23 @@
 }
 
 .modal-content {
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #383e40;
+}
+
+.theatre-name {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 200;
+}
+
+.showtime {
+  margin-top: 0;
+  font-size: 15px;
 }
 
 .close-modal:hover {
