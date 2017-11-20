@@ -2,10 +2,11 @@
 Bored is a web app that helps you find something to do when you have nothing to do.
 
 ## MVP
-- Users can sign up and log in
-- Users can search for movies currently playing in theaters near them or TV shows/sporting events
-- Users can choose to go to Seamless.com to order food to go with their show of choice (_"make an evening of it"_)
-- Users can save and delete "bored" history
+- Users can create an account
+- Users can search for TV shows movies currently playing in theaters near them
+- Bored will recommend a user to stay at home if the current temperature at their location is below freezing
+- Users can choose to go to Seamless.com to order food to go with their TV show of choice or restaurants near their location
+- Users can see how many times they chose to stay in or go out
 
 ## User Stories
 - My plans fell through for the weekend and now I have nothing to do. I'm going to be sitting at home and need something to watch.
@@ -14,43 +15,37 @@ Bored is a web app that helps you find something to do when you have nothing to 
 
 ## Tech
 - GraceNote OnConnect Data Delivery API
+- Open Weather API
+- The Movie DB API
 - ReactJS (_front end_)
 - Ruby on Rails (_back end_)
+- Date-Format-Lite
 - CSS
 - PostgreSQL
 - Surge & Heroku
 
-## Reach Goals
-- Add another API for Spotify playlists and/or concerts
-- Add another API (Foursquare or Google Places) to find restaurants near the event you are attending
-- Parse through search preferences and customize recommendations
-- React Native
-
-## Preliminary Wireframes
+## Wireframes
 
 ### Landing Page
-![landing](https://user-images.githubusercontent.com/24556028/32766438-efeb23cc-c8dc-11e7-8f6c-2c69809da31c.png)
+![landing](https://user-images.githubusercontent.com/24556028/33004684-3619abe0-cd90-11e7-83ae-75b661db608d.png)
 
-### Search Page (_I need to leave the house / I'm parked on the couch_)
-![search param](https://user-images.githubusercontent.com/24556028/32766442-f00e1b52-c8dc-11e7-8729-94a295a3fd8c.png)
+### Log In Page
+![log in](https://user-images.githubusercontent.com/24556028/33004685-36286ee6-cd90-11e7-9328-4d97bc838b3a.png)
 
-### Search Results (_I'm parked on the couch_)
-![in - results](https://user-images.githubusercontent.com/24556028/32766437-efe17c00-c8dc-11e7-89ac-ab4478207232.png)
+### Search Page
+![search param](https://user-images.githubusercontent.com/24556028/33004689-36576b92-cd90-11e7-9193-5bfff1e10202.png)
 
-### Selected Search Result (_I'm parked on the couch_)
-![in - results seamless](https://user-images.githubusercontent.com/24556028/32766435-efd0d562-c8dc-11e7-9a53-67059eec8415.png)
+### Search Page (Open Menu)
+![menu](https://user-images.githubusercontent.com/24556028/33004686-36352b4a-cd90-11e7-98cd-196813f97bb6.png)
 
-### Search Parameter: Location (_I need to leave the house_)
-![out - location](https://user-images.githubusercontent.com/24556028/32766439-eff3d3aa-c8dc-11e7-8e1e-2af009d8c1a8.png)
+### Search Page - Leaving The House
+![out search](https://user-images.githubusercontent.com/24556028/33004688-364e9d96-cd90-11e7-81bd-d0ec0677d373.png)
 
-### Search Results (_I need to leave the house_)
-![out - results](https://user-images.githubusercontent.com/24556028/32766441-efffeee2-c8dc-11e7-8797-9b074f878997.png)
+### Search Results
+![out results](https://user-images.githubusercontent.com/24556028/33004687-36429974-cd90-11e7-8034-29fa583ad30b.png)
 
-### User's Account
-![bored history](https://user-images.githubusercontent.com/24556028/32766434-efc23f16-c8dc-11e7-890e-d3fc0e94698e.png)
-
-### User's Account (_delete_)
-![bored history - delete](https://user-images.githubusercontent.com/24556028/32766433-efb798cc-c8dc-11e7-8a93-5eb0736bb705.png)
+### User Home Page
+![bored history](https://user-images.githubusercontent.com/24556028/33004683-360a7706-cd90-11e7-8608-3375ccce54cc.png)
 
 ## More
 Check out the [Rails back end](https://github.com/beccaLeeBae/Bored-Rails) for Bored.
