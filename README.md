@@ -17,6 +17,7 @@ Bored is a web app that helps you find something to do when you have nothing to 
 - GraceNote OnConnect Data Delivery API
 - Open Weather API
 - The Movie DB API
+- Foursquare API
 - ReactJS (_front end_)
 - Ruby on Rails (_back end_)
 - Date-Format-Lite

@@ -9,6 +9,7 @@ class GoingOut extends Component {
 		this.state = {
 			show: false,
 			description: '',
+			modalFood: false,
 			title: '',
 			showtimes: [],
 			dummyMovie:
@@ -16,13 +17,21 @@ class GoingOut extends Component {
 		};
 	}
 
-	toggleModal(event, description, showtimes) {
+	toggleModal(event, description, showtimes, title) {
 		event.preventDefault();
 		this.setState(prev => {
 			prev.show = prev.show === false ? true : false;
 			return prev;
 		});
-		this.setState({ description: description, showtimes: showtimes });
+		this.setState({ description: description, showtimes: showtimes, title: title });
+		// this.getFood();
+	}
+
+	toggleFood(event) {
+		this.setState(prev => {
+			prev.modalFood = prev.modalFood === false ? true : false;
+			return prev;
+		});
 	}
 
 	getMovies() {
@@ -31,9 +40,7 @@ class GoingOut extends Component {
 				<div className="results-each" key={movie.tmsId}>
 					<img src={this.state.dummyMovie} alt="Movie Poster" />
 					<p className="results-title">{movie.title}</p>
-					<p>{movie.genres}</p>
-					<p>{movie.showtimes[0].theatre.name}</p>
-					<button onClick= {e => this.toggleModal(e, movie.shortDescription, movie.showtimes)}>More</button>
+					<button onClick= {e => this.toggleModal(e, movie.shortDescription, movie.showtimes, movie.title)}>More</button>
 				</div>
 			);
 		});
@@ -51,18 +58,23 @@ class GoingOut extends Component {
 				)
 		})
 	}
-
-	// getFood() {
-	// 	return this.props.foodOptions.forEach(option => {
-	// 		return (
-	// 			<div key={option.id}>
-	// 			<p>{option.venue.name}</p>
-	// 			<p>{option.venue.location}</p>
-	// 			<p></p>
-	// 			</div>
-	// 			)
-	// 	})
-	// }
+	getFood() {
+		return this.props.foodOptions.map(option => {
+			console.log(option.venue);
+			const venueBg = {
+				"priceColor": `#${option.venue.ratingColor}`
+			};
+			return (
+				<div key={option.venue.id} style={{backgroundColor: venueBg.priceColor}} className="modal-food-each">
+					<p className="theatre-name">{option.venue.name}</p>
+					<p className="venue-category">{option.venue.categories[0].name}</p>
+					<p>{option.venue.location.formattedAddress[0]}</p>
+					<p>{option.venue.location.formattedAddress[1]}</p>
+					{option.venue.url && (<a href={option.venue.url}>More</a>)}
+				</div>
+				)
+		})
+	}
 
 	render() {
 		return (
@@ -89,16 +101,35 @@ class GoingOut extends Component {
 								>
 									&times;
 								</span>
+								{this.state.modalFood === false && (
 								<div className="modal-content">
-								
-								{this.state.description && (<p>{this.state.description}</p>)}
-								<div className="modal-showtimes">
 								<p>{this.state.title}</p>
+								{this.state.description && (<p>{this.state.description}</p>)}
+								<div className="modal-buttons">
+								<button>I'll watch this</button>
+								<button onClick={this.toggleFood.bind(this)}>Find food nearby</button>
+								</div>
+								<div className="modal-showtimes">
 								{this.getShowtimes()}
 								</div>
-								<button>I'll watch this</button>
-								<button>Find food nearby</button>
 							</div>
+									)}
+								{this.state.modalFood === true && (
+								<div className="modal-content">
+								<p>{this.state.title}</p>
+								{this.state.description && (<p>{this.state.description}</p>)}
+								<div className="modal-buttons">
+								<button>I'll watch this</button>
+								<button onClick={this.toggleFood.bind(this)}>Back to showtimes</button>
+								</div>
+								<div className="modal-showtimes">
+								{this.getFood()}
+								</div>
+							</div>
+									)}
+
+
+
 							</div>
 						</div>
 					</div>
