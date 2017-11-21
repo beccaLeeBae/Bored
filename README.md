@@ -23,6 +23,7 @@ Once this was completed, I moved on to building out the back end in Rails. This 
 * Token authentication
 * A route to get movies currently in theatres (_with the current date and user's zip code_)
 * A route to get all trending TV shows
+* A route to get information about the next episode of a particular TV show
 * A route to get the current weather (_with the user's zip code_)
 * A route to get nearby restaurants (_with the user's zip code and meal type generated from the time of day of the search_)
 * A route to save a TV show or movie that the user is choosing to watch to that user's account (_with the type of entertainment medium_)
@@ -34,6 +35,7 @@ My final touches included adding corresponding axios requests on the front end, 
 - GraceNote OnConnect Data Delivery API
 - Open Weather API
 - The Movie DB API
+- TV Maze API
 - Foursquare API
 - ReactJS (_front end_)
 - Ruby on Rails (_back end_)

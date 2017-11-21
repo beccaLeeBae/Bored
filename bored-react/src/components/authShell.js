@@ -21,7 +21,7 @@ class AuthShell extends Component {
 			zip: '',
 			date: "",
 			meal: '',
-			url: "http://localhost:3000",
+			url: "https://bored-rails.herokuapp.com",
 			movieData: [],
 			tvData: [],
 			episodeData: [],
