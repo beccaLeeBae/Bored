@@ -2,15 +2,30 @@ import React, { Component } from 'react';
 import Nav from './nav';
 import Couch from "../images/couch-account.png";
 import Car from "../images/car-account.png";
+import axios from 'axios';
 import '../App.css';
 
 class Account extends Component {
-
-componentDidMount(){
-	console.log("Calculating all saved entries");
-	// get number of all saved entries
-	// render the total from out or in vs. total
-}
+	constructor(){
+		super();
+		this.state = {
+			total: 0,
+			movies: 0,
+			tv: 0
+		}
+	}
+	componentDidMount() {
+		const medium = "movie";
+		axios
+			.get(`${this.props.url}/saved/${this.props.user.id}/${medium}`)
+			.then(res => {
+				this.setState({ movies: res.data.movie_length, tv: res.data.tv_length, total: res.data.total_times });
+				console.log(this.state);
+			})
+			.catch(err => {
+				console.log("Error");
+			});
+	}
 
 render(){
 	return(
@@ -25,13 +40,13 @@ render(){
 						<div className="couch-account-button" onClick={this.getSavedIn}>
 							<img src={Couch} alt="Couch" />
 						</div>
-						<p className="account-sub-text">x/x times</p>
+						<p className="account-sub-text">{this.state.tv}/{this.state.total} times</p>
 					</div>
 					<div className="account-body-buttons">
 						<div className="car-account-button" onClick={this.getSavedOut}>
 							<img src={Car} alt="Car" />
 						</div>
-						<p className="account-sub-text">x/x times</p>
+						<p className="account-sub-text">{this.state.movies}/{this.state.total} times</p>
 					</div>
 				</div>
 				</div>

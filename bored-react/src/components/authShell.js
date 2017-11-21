@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+// import Index from './index';
 import Form from "./form";
 import Search from "./search";
 import Confirm from './confirm';
@@ -104,7 +105,11 @@ class AuthShell extends Component {
 			.get(`${this.state.url}/weather/${zip}`)
 			.then(res => {
 				if ((res.data.main.temp) > 32) {
+					this.setState({ zip: zip });
 					this.getMovies(zip);
+				} else if ((res.data.main.temp) > 90) {
+					this.setState({ weatherData: res.data, zip: zip});
+					this.props.history.push(`/confirm`);
 				}
 				else {
 					this.setState({ weatherData: res.data, zip: zip});
@@ -149,11 +154,12 @@ class AuthShell extends Component {
 		});
 	}
 
-	showNextEpisode(title) {
+	showNextEpisode(title, callback) {
 		axios.get(`${this.state.url}/next/${title}`)
 		.then(res => {
-			this.setState({ episodeData: res.data[0].show });
-			console.log("Episode data in authShell", this.state.episodeData);
+			this.setState({ episodeData: res.data });
+			console.log("Episode Data", this.state.episodeData);
+			if (callback) { callback() } ;
 		}).catch(err => {
 			console.log("Error fetching next showing")
 		})
@@ -209,6 +215,7 @@ class AuthShell extends Component {
 						this.requireUser(
 							<GoingOut
 								user={this.state.user}
+								url={this.state.url}
 								foodOptions={this.state.foodOptions}
 								logoutUser={this.logoutUser}
 								movieData={this.state.movieData}
@@ -233,7 +240,7 @@ class AuthShell extends Component {
 					path="/account"
 					render={props =>
 						this.requireUser(
-							<Account user={this.state.user} logoutUser={this.logoutUser} />
+							<Account user={this.state.user} url={this.state.url} logoutUser={this.logoutUser} />
 						)}
 				/>
 				<Route path="/404" render={props => <NoUser />} />

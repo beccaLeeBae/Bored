@@ -2,15 +2,28 @@ import React, { Component } from "react";
 import Nav from "./nav";
 import axios from "axios";
 import "../App.css";
+require("date-format-lite");
 
 class StayingIn extends Component {
 	constructor() {
 		super();
 		this.state = {
-			show: false,
+			openModal: false,
 			title: "",
-			overview: ""
+			overview: "",
+			saved: false
 		};
+	}
+
+	toggleModal(show) {
+		this.setState(prev => {
+			return {
+				openModal: !prev.openModal,
+				overview: prev.overview === "" ? show.overview : "",
+				title: prev.title === "" ? show.name : "",
+				saved: false
+			};
+		});
 	}
 
 	getShows() {
@@ -21,52 +34,43 @@ class StayingIn extends Component {
 						src={`https://image.tmdb.org/t/p/w500${show.poster_path}`}
 						alt="Show Poster"
 					/>
-					<p className="results-title">{show.name}</p>
-					<p>Rating: {show.vote_average}</p>
+					<p className="show-name">{show.name}</p>
+					<p className="show-rating">Rating: {show.vote_average}/10</p>
 					<button onClick={e => this.onClick(e, show)}>More</button>
 				</div>
 			);
 		});
 	}
 
-
 	onClick(e, show) {
-		this.toggleModal(e, show);
-		this.props.showNextEpisode(show.name);
+		e.preventDefault();
+		console.log("clicked button");
+		this.props.showNextEpisode(show.name, this.toggleModal.bind(this, show));
 	}
 
 	saveOnClick(e) {
 		e.preventDefault();
 		console.log(this.props.url);
 		const medium = "tv";
-		axios.post(`${this.props.url}/save`, {medium: medium, title: this.state.title, user_id: this.props.user.id})
-		.then( res => {
-			console.log("SAVED", this.state.title)
-			}).catch( err => {
-				console.log("Error saving tv show");
+		axios
+			.post(`${this.props.url}/save`, {
+				medium: medium,
+				title: this.state.title,
+				user_id: this.props.user.id
 			})
-	}
-
-	toggleModal(event, show) {
-		event.preventDefault();
-		this.setState(prev => {
-			prev.show = prev.show === false ? true : false;
-			return prev;
-		});
-		this.setState(prev => {
-			prev.overview = prev.overview === "" ? show.overview : "";
-			return prev;
-		});
-		this.setState(prev => {
-			prev.title = prev.title === "" ? show.name : "";
-			return prev;
-		});
+			.then(res => {
+				console.log("Saved tv show!");
+				this.setState({ saved: true });
+				})
+			.catch(err => {
+				console.log("Error saving tv show");
+			});
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.show === false && (
+				{this.state.openModal === false && (
 					<div className="results-content">
 						<div className="search-header">
 							<div className="results-text-content">
@@ -79,7 +83,7 @@ class StayingIn extends Component {
 					</div>
 				)}
 
-				{this.state.show === true && (
+				{this.state.openModal === true && (
 					<div className="results-content">
 						<div className="modal">
 							<div className="show-more-modal">
@@ -89,16 +93,32 @@ class StayingIn extends Component {
 								>
 									&times;
 								</span>
-								<div className="modal-content">
-									<p className="show-title">{this.state.title}</p>
-									<p>{this.state.overview}</p>
-										<button onClick={ e => this.saveOnClick(e)}>
+									{this.state.saved === false && (									
+										<div className="modal-content">
+										<p className="show-title">{this.state.title}</p>
+										<p>{this.state.overview}</p>
+										<p className="episode-day-time">
+											{this.props.episodeData[0].show.schedule.days.toString()}{" "}
+											at{" "}
+											{this.props.episodeData[0].show.schedule.time.date(
+												"H:mm A"
+											)}
+										</p>
+										<p className="episode-network">
+											{this.props.episodeData[0].show.network.name}
+										</p>
+										<button onClick={e => this.saveOnClick(e)}>
 											I'll watch this
 										</button>
-										<a href="https://www.seamless.com/">
-											<button>Seamless</button>
-										</a>
-								</div>
+									</div>
+									)}
+									{this.state.saved === true && (
+										<div className="modal-content">
+										<p className="confirm-text">Make an evening of it.</p>
+										<a href="http://seamless.com"><button>Seamless</button></a>
+										</div>
+										)}
+
 							</div>
 						</div>
 					</div>

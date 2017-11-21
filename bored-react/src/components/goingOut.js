@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import Nav from "./nav";
 import "../App.css";
+import axios from "axios";
 require("date-format-lite");
 
 class GoingOut extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: false,
-			description: '',
+			openModal: false,
+			description: "",
 			modalFood: false,
-			title: '',
+			title: "",
 			showtimes: [],
 			dummyMovie:
 				"https://i.pinimg.com/736x/40/13/54/40135456fa61e13eddc37bcfa6e9f905--minimalist-movie-posters-minimalist-art.jpg"
@@ -20,11 +21,14 @@ class GoingOut extends Component {
 	toggleModal(event, description, showtimes, title) {
 		event.preventDefault();
 		this.setState(prev => {
-			prev.show = prev.show === false ? true : false;
+			prev.openModal = prev.openModal === false ? true : false;
 			return prev;
 		});
-		this.setState({ description: description, showtimes: showtimes, title: title });
-		// this.getFood();
+		this.setState({
+			description: description,
+			showtimes: showtimes,
+			title: title
+		});
 	}
 
 	toggleFood(event) {
@@ -39,9 +43,18 @@ class GoingOut extends Component {
 			return (
 				<div className="results-each" key={movie.tmsId}>
 					<img src={this.state.dummyMovie} alt="Movie Poster" />
-					<img src={movie.preferredImage.uri} alt="Movie Poster" />
 					<p className="results-title">{movie.title}</p>
-					<button onClick= {e => this.toggleModal(e, movie.shortDescription, movie.showtimes, movie.title)}>More</button>
+					<button
+						onClick={e =>
+							this.toggleModal(
+								e,
+								movie.shortDescription,
+								movie.showtimes,
+								movie.title
+							)}
+					>
+						More
+					</button>
 				</div>
 			);
 		});
@@ -49,38 +62,58 @@ class GoingOut extends Component {
 
 	getShowtimes() {
 		return this.state.showtimes.map(showing => {
-			const s = ((showing.dateTime).date("H:mm A"));
+			const s = showing.dateTime.date("H:mm A");
 			return (
 				<div key={Math.random()} className="modal-showtimes-each">
-				<p className="theatre-name">{showing.theatre.name}</p>
-				<p className="showtime">{s}</p>
-				{showing.ticketURI && (<a href={showing.ticketURI}>Get Tickets</a>)}
+					<p className="theatre-name">{showing.theatre.name}</p>
+					<p className="showtime">{s}</p>
+					{showing.ticketURI && <a href={showing.ticketURI}>Get Tickets</a>}
 				</div>
-				)
-		})
+			);
+		});
 	}
 	getFood() {
 		return this.props.foodOptions.map(option => {
 			console.log(option.venue);
-			const venueBg = {
-				"priceColor": `#${option.venue.ratingColor}`
-			};
 			return (
-				<div key={option.venue.id} style={{backgroundColor: venueBg.priceColor}} className="modal-food-each">
+				<div
+					key={option.venue.id}
+					className="modal-food-each"
+				>
 					<p className="theatre-name">{option.venue.name}</p>
 					<p className="venue-category">{option.venue.categories[0].name}</p>
 					<p>{option.venue.location.formattedAddress[0]}</p>
 					<p>{option.venue.location.formattedAddress[1]}</p>
-					{option.venue.url && (<a href={option.venue.url}>More</a>)}
+					{option.venue.url && <a href={option.venue.url}>More</a>}
 				</div>
-				)
-		})
+			);
+		});
+	}
+
+	saveOnClick() {
+		// e.preventDefault();
+		console.log(this.props.url);
+		const medium = "movie";
+		axios
+			.post(`${this.props.url}/save`, {
+				medium: medium,
+				title: this.state.title,
+				user_id: this.props.user.id
+			})
+			.then(res => {
+				// console.log("SAVED", this.state.title);
+				// this.props.history.push(`/account`);
+				this.setState({ openModal: false });
+			})
+			.catch(err => {
+				console.log("Error saving tv show");
+			});
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.show === false && (
+				{this.state.openModal === false && (
 					<div className="results-content">
 						<div className="search-header">
 							<div className="results-text-content">
@@ -92,7 +125,7 @@ class GoingOut extends Component {
 						<div className="results-gallery">{this.getMovies()}</div>
 					</div>
 				)}
-				{this.state.show === true && (
+				{this.state.openModal === true && (
 					<div className="results-content">
 						<div className="modal">
 							<div className="show-more-modal">
@@ -103,34 +136,33 @@ class GoingOut extends Component {
 									&times;
 								</span>
 								{this.state.modalFood === false && (
-								<div className="modal-content">
-								<p>{this.state.title}</p>
-								{this.state.description && (<p>{this.state.description}</p>)}
-								<div className="modal-buttons">
-								<button>I'll watch this</button>
-								<button onClick={this.toggleFood.bind(this)}>Find food nearby</button>
-								</div>
-								<div className="modal-showtimes">
-								{this.getShowtimes()}
-								</div>
-							</div>
-									)}
+									<div className="modal-content">
+										<p className="show-title">{this.state.title}</p>
+										{this.state.description && <p>{this.state.description}</p>}
+										<div className="modal-buttons">
+											<button onClick={this.saveOnClick.bind(this)}>I'll watch this</button>
+											<button onClick={this.toggleFood.bind(this)}>
+												Find food nearby
+											</button>
+										</div>
+										<div className="modal-showtimes">{this.getShowtimes()}</div>
+									</div>
+								)}
 								{this.state.modalFood === true && (
-								<div className="modal-content">
-								<p>{this.state.title}</p>
-								{this.state.description && (<p>{this.state.description}</p>)}
-								<div className="modal-buttons">
-								<button>I'll watch this</button>
-								<button onClick={this.toggleFood.bind(this)}>Back to showtimes</button>
-								</div>
-								<div className="modal-showtimes">
-								{this.getFood()}
-								</div>
-							</div>
-									)}
-
-
-
+									<div className="modal-content">
+										<p className="show-title">{this.state.title}</p>
+										{this.state.description && <p>{this.state.description}</p>}
+										<div className="modal-buttons">
+											<button onClick={this.saveOnClick.bind(this)}>
+												I'll watch this
+											</button>
+											<button onClick={this.toggleFood.bind(this)}>
+												Back to showtimes
+											</button>
+										</div>
+										<div className="modal-showtimes">{this.getFood()}</div>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
