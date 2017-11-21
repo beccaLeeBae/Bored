@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nav from "./nav";
+import MoviePoster from '../images/dummyMovie.jpg';
 import "../App.css";
 import axios from "axios";
 require("date-format-lite");
@@ -12,9 +13,7 @@ class GoingOut extends Component {
 			description: "",
 			modalFood: false,
 			title: "",
-			showtimes: [],
-			dummyMovie:
-				"https://i.pinimg.com/736x/40/13/54/40135456fa61e13eddc37bcfa6e9f905--minimalist-movie-posters-minimalist-art.jpg"
+			showtimes: []
 		};
 	}
 
@@ -42,7 +41,7 @@ class GoingOut extends Component {
 		return this.props.movieData.map(movie => {
 			return (
 				<div className="results-each" key={movie.tmsId}>
-					<img src={this.state.dummyMovie} alt="Movie Poster" />
+					<img src={MoviePoster} alt="Movie Poster" />
 					<p className="results-title">{movie.title}</p>
 					<button
 						onClick={e =>

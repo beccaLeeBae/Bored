@@ -4,7 +4,7 @@
 
 Bored is a web app that helps you find something to do when you have nothing to do.
 
-Users can choose to find something to watch at home or at a movie theatre.
+Users have two choices:
 * Choosing to stay at home populates trending TV shows including when it airs (day(s) of the week and time) and the network. Users are given the option to visit Seamless after their choice is made.
 * Choosing to leave the house takes the user's location (using their zip code) and checks if the current temperature is too extreme to go outside. 
    * If the current temperature falls into one of the two extremes (below 32&deg;F or above 90&deg;F), Bored will warn the user and give them an option to go back to TV show choices or to brave the weather.
