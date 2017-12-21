@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Nav from "./nav";
-import MoviePoster from '../images/dummyMovie.jpg';
 import "../App.css";
 import axios from "axios";
 require("date-format-lite");
@@ -40,9 +39,9 @@ class GoingOut extends Component {
 	getMovies() {
 		return this.props.movieData.map(movie => {
 			return (
-				<div className="results-each" key={movie.tmsId}>
-					<img src={MoviePoster} alt="Movie Poster" />
+				<div className="movie-results-each" key={movie.tmsId}>
 					<p className="results-title">{movie.title}</p>
+					{movie.genres && (<p className="results-genre">{movie.genres[0]}</p>)}
 					<button
 						onClick={e =>
 							this.toggleModal(
@@ -66,7 +65,7 @@ class GoingOut extends Component {
 				<div key={Math.random()} className="modal-showtimes-each">
 					<p className="theatre-name">{showing.theatre.name}</p>
 					<p className="showtime">{s}</p>
-					{showing.ticketURI && <a href={showing.ticketURI}>Get Tickets</a>}
+					{showing.ticketURI && <a href={showing.ticketURI} rel="noopener noreferrer" target='_blank'>Get Tickets</a>}
 				</div>
 			);
 		});
@@ -83,7 +82,7 @@ class GoingOut extends Component {
 					<p className="venue-category">{option.venue.categories[0].name}</p>
 					<p>{option.venue.location.formattedAddress[0]}</p>
 					<p>{option.venue.location.formattedAddress[1]}</p>
-					{option.venue.url && <a href={option.venue.url}>More</a>}
+					{option.venue.url && <a href={option.venue.url} rel="noopener noreferrer" target='_blank'>More</a>}
 				</div>
 			);
 		});

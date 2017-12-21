@@ -98,8 +98,6 @@ class StayingIn extends Component {
 										<p className="show-title">{this.state.title}</p>
 										<p>{this.state.overview}</p>
 										<p className="episode-day-time">
-											{this.props.episodeData[0].show.schedule.days.toString()}{" "}
-											at{" "}
 											{this.props.episodeData[0].show.schedule.time.date(
 												"H:mm A"
 											)}
@@ -115,7 +113,7 @@ class StayingIn extends Component {
 									{this.state.saved === true && (
 										<div className="modal-content">
 										<p className="confirm-text">Make an evening of it.</p>
-										<a href="http://seamless.com"><button>Seamless</button></a>
+										<a href="http://seamless.com" rel="noopener noreferrer" target='_blank'><button>Seamless</button></a>
 										</div>
 										)}
 

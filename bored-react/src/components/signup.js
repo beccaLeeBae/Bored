@@ -31,6 +31,13 @@ class Signup extends Component {
 	}
 
 	render() {
+
+		const inactiveButton = {
+			opacity: 0.5,
+			cursor: 'auto',
+			boxShadow: 'none'
+		}
+
 		return (
 			<div className="form-right">
 				<form onSubmit={this.signUp.bind(this)}>
@@ -38,9 +45,9 @@ class Signup extends Component {
 					<input type="email" placeholder="Email" value={this.state.inputs.email} onChange={e => this.changeInput(e, 'email')}/>
 					<input type="password" placeholder="Password" value={this.state.inputs.password} onChange={e => this.changeInput(e, 'password')}/>
 					<input type="password" placeholder="Confirm password" value={this.state.inputs.password_confirmation} onChange={e => this.changeInput(e, 'password_confirmation')}/>
-					<input type="submit" value="Sign Up" />
+					<button type="submit">Sign Up</button>
 				</form>
-				<button onClick={this.props.toggleMode}>Log In</button>
+				<button style={inactiveButton} onClick={this.props.toggleMode}>Log In</button>
 			</div>
 		);
 	}

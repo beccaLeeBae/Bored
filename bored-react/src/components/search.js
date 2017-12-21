@@ -76,7 +76,7 @@ class Search extends Component {
 								value={this.state.zip}
 								onChange={e => this.changeZip(e, "zip")}
 							/>
-							<input type="submit" value="Search" />
+							<button type="submit">Search"</button>
 						</form>
 					</div>
 				)}

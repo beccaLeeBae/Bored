@@ -34,7 +34,7 @@ class Login extends Component {
 				<form onSubmit={this.login.bind(this)}>
 					<input type="email" placeholder="Email" value={this.state.inputs.email} onChange={e => this.changeInput(e, "email")}/>
 					<input type="password" placeholder="Password" value={this.state.inputs.password} onChange={e => this.changeInput(e, "password")}/>
-					<input type="submit" value="Log In" />
+					<button type="submit">Log In</button>
 				</form>
 				<button onClick={this.props.toggleMode}>Register</button>
 			</div>
